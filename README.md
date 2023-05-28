@@ -1,2 +1,2 @@
-# terraform_react_deploy
+# terraform_aws_deploy_practice
 Terraformを使ってReactをデプロイするためのS3＋Cloudfront環境を構築する
