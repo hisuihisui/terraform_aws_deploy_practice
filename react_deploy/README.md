@@ -1,0 +1,2 @@
+# react_deploy
+Terraformを使ってReactをデプロイするためのS3＋Cloudfront環境を構築する
