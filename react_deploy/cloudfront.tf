@@ -1,5 +1,7 @@
 # Cloudfrontを定義
 resource "aws_cloudfront_distribution" "main" {
+  aliases = [ local.domain_name ]
+
   # オリジンの設定
   origin {
     origin_id = aws_s3_bucket.react_app_bucket.id
@@ -38,10 +40,11 @@ resource "aws_cloudfront_distribution" "main" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
-    # acm_certificate_arn = aws_acm_certificate.cert.arn
-    # ssl_support_method = "sni-only"
-    # minimum_protocol_version = "TLSv1"
+    # cloudfront_default_certificate = true
+    acm_certificate_arn = aws_acm_certificate.cert.arn
+    ssl_support_method = "sni-only"
+    minimum_protocol_version = "TLSv1"
+    # minimum_protocol_version = "TLSv1.2_2021"
   }
 }
 

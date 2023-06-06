@@ -2,6 +2,7 @@
 resource "aws_acm_certificate" "cert" {
   domain_name       = local.domain_name
   validation_method = "DNS"
+  provider = aws.virginia
 
   lifecycle {
     create_before_destroy = true
@@ -12,4 +13,5 @@ resource "aws_acm_certificate" "cert" {
 resource "aws_acm_certificate_validation" "cert" {
   certificate_arn = aws_acm_certificate.cert.arn
   validation_record_fqdns = flatten([ values(aws_route53_record.cert)[*].fqdn ])
+  provider = aws.virginia
 }
