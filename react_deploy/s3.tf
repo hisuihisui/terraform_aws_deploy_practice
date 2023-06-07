@@ -1,7 +1,7 @@
 # Reactアプリを入れておくバケット
 resource "aws_s3_bucket" "react_app_bucket" {
   # バケット名は一意のため、重複しないようにする
-  bucket = "hisui-react-app-bucket"
+  bucket = local.react_app_bucket_name
   force_destroy = true
 }
 
@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "react_app_bucket" {
 
 # Cloudfrontのアクセスログ格納用バケット
 resource "aws_s3_bucket" "cloudfront_log" {
-  bucket = "hisui-cloudfront-log-bucket"
+  bucket = local.cloudfront_log_bucket_name
   force_destroy = true
 }
 
