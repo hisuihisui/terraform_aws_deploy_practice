@@ -1,6 +1,6 @@
 # ACM証明書を定義
 resource "aws_acm_certificate" "cert" {
-  domain_name       = local.domain_name
+  domain_name = local.domain_name
   validation_method = "DNS"
   provider = aws.virginia
 
