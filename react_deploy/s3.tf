@@ -2,7 +2,9 @@
 resource "aws_s3_bucket" "react_app_bucket" {
   # バケット名は一意のため、重複しないようにする
   bucket = local.react_app_bucket_name
-  force_destroy = true
+  # 構築 → 削除 を繰り返す場合はコメントアウトを外す
+  # これを設定しておくと、中身があってもdestroyコマンドでバケットを削除できる
+  # force_destroy = true
 }
 
 resource "aws_s3_bucket_website_configuration" "react_app_bucket" {
@@ -51,7 +53,9 @@ data "aws_iam_policy_document" "react_app_bucket" {
 # Cloudfrontのアクセスログ格納用バケット
 resource "aws_s3_bucket" "cloudfront_log" {
   bucket = local.cloudfront_log_bucket_name
-  force_destroy = true
+  # 構築 → 削除 を繰り返す場合はコメントアウトを外す
+  # これを設定しておくと、中身があってもdestroyコマンドでバケットを削除できる
+  # force_destroy = true
 }
 
 # private のACLを設定
