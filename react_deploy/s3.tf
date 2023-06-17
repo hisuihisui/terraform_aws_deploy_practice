@@ -54,6 +54,8 @@ resource "aws_s3_bucket" "cloudfront_log" {
   force_destroy = true
 }
 
+# private のACLを設定
+# https://hisuiblog.com/error-aws-terraform-cloudfront-access-log-s3-enable-acl/
 resource "aws_s3_bucket_ownership_controls" "cloudfront_log" {
   bucket = aws_s3_bucket.cloudfront_log.id
   rule {

@@ -19,6 +19,8 @@ resource "aws_route53_record" "test" {
 
 # ACMのDNS検証用レコード
 resource "aws_route53_record" "cert" {
+  # Set型をListへ変換
+  # https://hisuiblog.com/error-aws-terraform-acm-dns-auth/
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name

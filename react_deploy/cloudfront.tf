@@ -39,6 +39,8 @@ resource "aws_cloudfront_distribution" "main" {
     }
   }
 
+  # 暗号化設定
+  # https://hisuiblog.com/error-aws-terraform-cloudfront-acm-cant-access/
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.cert.arn
     ssl_support_method = "sni-only"
@@ -47,6 +49,7 @@ resource "aws_cloudfront_distribution" "main" {
 }
 
 # OACを作成
+# これを使用してS3に安全にアクセスできるようにしている
 resource "aws_cloudfront_origin_access_control" "main" {
   name = "cf-s3-oac"
   origin_access_control_origin_type = "s3"
