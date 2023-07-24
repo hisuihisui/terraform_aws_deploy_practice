@@ -1,6 +1,8 @@
 # Cloudfrontを定義
 resource "aws_cloudfront_distribution" "main" {
   aliases = [ local.domain_name ]
+  enabled = true
+  default_root_object = "index.html"
 
   # オリジンの設定
   origin {
@@ -8,8 +10,6 @@ resource "aws_cloudfront_distribution" "main" {
     domain_name = aws_s3_bucket.react_app_bucket.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.main.id
   }
-
-  enabled = true
 
   # アクセスログの設定
   logging_config {
