@@ -1,6 +1,6 @@
 # デフォルトではこちらの値が使われる
 provider "aws" {
-  region  = "ap-northeast-1"
+  region = "ap-northeast-1"
 }
 
 # こちらを指定するには

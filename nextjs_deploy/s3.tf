@@ -18,10 +18,10 @@ resource "aws_s3_bucket_website_configuration" "next_app_bucket" {
 # ブロックパブリックアクセス
 # S3に直接参照できないようにすべてtrueにしておく
 resource "aws_s3_bucket_public_access_block" "next_app_bucket" {
-  bucket = aws_s3_bucket.next_app_bucket.id
-  block_public_acls = true
-  block_public_policy = true
-  ignore_public_acls = true
+  bucket                  = aws_s3_bucket.next_app_bucket.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
   restrict_public_buckets = true
 }
 
@@ -36,8 +36,8 @@ data "aws_iam_policy_document" "next_app_bucket" {
   # OACに対してGetを許可
   statement {
     principals {
-      type = "Service"
-      identifiers = [ "cloudfront.amazonaws.com" ]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
     }
     actions = [
       "s3:GetObject",
@@ -48,9 +48,9 @@ data "aws_iam_policy_document" "next_app_bucket" {
       "${aws_s3_bucket.next_app_bucket.arn}/*"
     ]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "aws:SourceArn"
-      values = [ aws_cloudfront_distribution.main.arn ]
+      values   = [aws_cloudfront_distribution.main.arn]
     }
   }
 }
@@ -74,7 +74,7 @@ resource "aws_s3_bucket_ownership_controls" "cloudfront_log" {
 }
 
 resource "aws_s3_bucket_acl" "cloudfront_log" {
-  depends_on = [ aws_s3_bucket_ownership_controls.cloudfront_log ]
+  depends_on = [aws_s3_bucket_ownership_controls.cloudfront_log]
 
   bucket = aws_s3_bucket.cloudfront_log.id
   acl    = "private"
@@ -85,7 +85,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "cloudfront_log" {
   bucket = aws_s3_bucket.cloudfront_log.id
 
   rule {
-    id = "rule-1"
+    id     = "rule-1"
     status = "Enabled"
 
     expiration {
@@ -106,15 +106,15 @@ data "aws_iam_policy_document" "cloudfront_log" {
   # OACに対してPutを許可
   statement {
     principals {
-      type = "Service"
-      identifiers = [ "cloudfront.amazonaws.com" ]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
     }
-    actions = [ "s3:PutObject" ]
-    resources = [ "${aws_s3_bucket.cloudfront_log.arn}/*" ]
+    actions   = ["s3:PutObject"]
+    resources = ["${aws_s3_bucket.cloudfront_log.arn}/*"]
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "aws:SourceArn"
-      values = [ aws_cloudfront_distribution.main.arn ]
+      values   = [aws_cloudfront_distribution.main.arn]
     }
   }
 }
