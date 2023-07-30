@@ -1,6 +1,6 @@
 # ホストゾーンの参照
 data "aws_route53_zone" "host_zone" {
-  name =  local.host_zone
+  name = local.host_zone
 
 }
 
@@ -33,7 +33,7 @@ resource "aws_route53_record" "cert" {
   type = each.value.type
   # 検証するレコード
   # subject_alternative_names がある場合には複数指定
-  records = [ each.value.record ]
+  records = [each.value.record]
   zone_id = data.aws_route53_zone.host_zone.zone_id
-  ttl = 60
+  ttl     = 60
 }
