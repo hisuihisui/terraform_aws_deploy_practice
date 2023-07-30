@@ -31,6 +31,12 @@ resource "aws_cloudfront_distribution" "main" {
         forward = "none"
       }
     }
+
+    # CloudFront Functionsの紐づけ
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.main.arn
+    }
   }
 
   restrictions {
@@ -55,4 +61,13 @@ resource "aws_cloudfront_origin_access_control" "main" {
   origin_access_control_origin_type = "s3"
   signing_behavior = "always"
   signing_protocol = "sigv4"
+}
+
+# CloudFront Functions
+resource "aws_cloudfront_function" "main" {
+  name    = "function"
+  runtime = "cloudfront-js-1.0"
+  comment = "default directory index"
+  publish = true
+  code    = file("./CloudFront_Functions/function.js")
 }
