@@ -53,6 +53,15 @@ resource "aws_cloudfront_distribution" "main" {
     minimum_protocol_version = "TLSv1"
   }
 
+  # カスタムエラーレスポンス
+  # 401エラー は設定できない
+  # 404エラー
+  custom_error_response {
+    error_caching_min_ttl = 3600
+    error_code            = 404
+    response_code         = 404
+    response_page_path    = "/error/404.html"
+  }
 }
 
 # OACを作成
